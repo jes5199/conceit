@@ -29,9 +29,10 @@ get /(.*)/ do
   STDERR.puts cmd_line
 
   output = `#{cmd_line} 2>&1`
-  status = $?.to_i
-  if status != 0
-    [ 500 + status, output ]
+  stat = $?.to_i
+  content_type :txt
+  if stat != 0
+    status(500+stat)
   end
   output
 end
